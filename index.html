@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estepona — El Jardín de la Costa del Sol</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdf8f0;
+    --warm-white: #fbf5ec;
+    --sand: #f3e8d4;
+    --peach: #f4d3b3;
+    --terracotta: #c97b5b;
+    --terracotta-dark: #a85e42;
+    --ochre: #d9a55b;
+    --olive: #7a8466;
+    --ink: #2d2620;
+    --ink-soft: #5a4f44;
+    --line: rgba(45, 38, 32, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--ink);
+  }
+
+  a { color: var(--terracotta-dark); text-decoration: none; transition: color .3s ease; }
+  a:hover { color: var(--ochre); }
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 18px 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(253, 248, 240, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    transition: padding .3s ease;
+  }
+  .nav.scrolled { padding: 12px 6vw; }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--terracotta-dark);
+  }
+  .logo span { color: var(--ochre); font-style: italic; }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--ink);
+    font-size: .9rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -6px; left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--terracotta);
+    transition: width .3s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-toggle { display: none; background: none; border: none; font-size: 1.5rem; color: var(--ink); cursor: pointer; }
+
+  /* HERO */
+  .hero {
+    height: 100vh;
+    min-height: 600px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('images/hero.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(253, 248, 240, 0.25) 0%, rgba(253, 248, 240, 0.65) 70%, var(--cream) 100%);
+    z-index: 2;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    padding: clamp(36px, 5vw, 64px) clamp(28px, 5vw, 64px);
+    max-width: 770px;
+    margin: 0 24px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 30px 80px -30px rgba(45, 38, 32, 0.25);
+  }
+  .hero-eyebrow {
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    color: var(--terracotta-dark);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  .hero h1 {
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--terracotta);
+    font-weight: 400;
+  }
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-bottom: 40px;
+    font-weight: 400;
+  }
+  .hero-cta {
+    display: inline-block;
+    padding: 16px 42px;
+    background: var(--terracotta);
+    color: var(--cream);
+    border-radius: 0;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: .85rem;
+    font-weight: 500;
+    transition: all .3s ease;
+    border: 1px solid var(--terracotta);
+  }
+  .hero-cta:hover {
+    background: transparent;
+    color: var(--terracotta-dark);
+  }
+  .scroll-indicator {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    color: var(--ink-soft);
+    font-size: .75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    animation: bob 2.5s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: .6; }
+    50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
+  }
+
+  /* SECTIONS */
+  section { padding: 120px 6vw; }
+  .section-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .section-eyebrow {
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: var(--ochre);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .section-header h2 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+  .section-header h2 em { font-style: italic; color: var(--terracotta); }
+  .section-header .ornament {
+    display: inline-block;
+    color: var(--ochre);
+    margin: 12px 0;
+    letter-spacing: 8px;
+  }
+  .section-header p {
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+  }
+
+  /* INTRO */
+  .intro {
+    background: linear-gradient(180deg, var(--cream) 0%, var(--warm-white) 100%);
+  }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .intro-text h2 {
+    font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+    margin-bottom: 24px;
+    line-height: 1.15;
+  }
+  .intro-text h2 em { font-style: italic; color: var(--terracotta); }
+  .intro-text p {
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+    font-size: 1.02rem;
+  }
+  .intro-image {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    box-shadow: 20px 20px 0 -2px var(--peach);
+  }
+  .intro-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s ease;
+  }
+  .intro-image:hover img { transform: scale(1.05); }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 64px;
+    padding-top: 48px;
+    border-top: 1px solid var(--line);
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem;
+    color: var(--terracotta);
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ink-soft);
+  }
+
+  /* PUNTOS DE INTERÉS */
+  .interest {
+    background: var(--warm-white);
+  }
+  .interest-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .card {
+    background: var(--cream);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    transition: all .5s ease;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px -20px rgba(168, 94, 66, 0.25);
+  }
+  .card-image {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    position: relative;
+  }
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s ease;
+  }
+  .card:hover .card-image img { transform: scale(1.08); }
+  .card-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(45, 38, 32, 0.3), transparent 50%);
+  }
+  .card-body { padding: 28px 28px 32px; }
+  .card-tag {
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ochre);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .card-body h3 {
+    font-size: 1.7rem;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .card-body p {
+    color: var(--ink-soft);
+    font-size: .95rem;
+    line-height: 1.7;
+  }
+
+  /* GASTRONOMÍA */
+  .gastro {
+    background: linear-gradient(180deg, var(--warm-white) 0%, var(--sand) 100%);
+    position: relative;
+  }
+  .gastro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .dish {
+    text-align: center;
+    padding: 24px 16px;
+  }
+  .dish-image {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--cream);
+    box-shadow: 0 0 0 1px var(--ochre), 0 20px 40px -15px rgba(168, 94, 66, 0.4);
+    transition: transform .5s ease;
+  }
+  .dish:hover .dish-image { transform: scale(1.05) rotate(2deg); }
+  .dish-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .dish h3 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: var(--terracotta-dark);
+  }
+  .dish .dish-sub {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ochre);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .dish p {
+    color: var(--ink-soft);
+    font-size: .92rem;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  /* TURISMO INFO */
+  .info {
+    background: var(--cream);
+    position: relative;
+  }
+  .info-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: stretch;
+  }
+  .info-card {
+    background: var(--warm-white);
+    padding: 48px 44px;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--terracotta);
+    transition: all .4s ease;
+  }
+  .info-card:hover {
+    background: var(--sand);
+    transform: translateY(-4px);
+  }
+  .info-card .ic-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--peach);
+    color: var(--terracotta-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    font-size: 1.6rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+  }
+  .info-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+  }
+  .info-card .ic-sub {
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ochre);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .info-list {
+    list-style: none;
+    margin-top: 16px;
+  }
+  .info-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    font-size: .95rem;
+    color: var(--ink-soft);
+  }
+  .info-list li:last-child { border-bottom: none; }
+  .info-list strong {
+    color: var(--ink);
+    font-weight: 500;
+    min-width: 110px;
+  }
+
+  .map-cta {
+    text-align: center;
+    margin-top: 64px;
+  }
+  .map-cta a {
+    display: inline-block;
+    padding: 14px 36px;
+    border: 1px solid var(--terracotta);
+    color: var(--terracotta-dark);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: .8rem;
+    font-weight: 500;
+    transition: all .3s ease;
+  }
+  .map-cta a:hover {
+    background: var(--terracotta);
+    color: var(--cream);
+  }
+
+  /* QUOTE */
+  .quote {
+    background: var(--terracotta);
+    color: var(--cream);
+    text-align: center;
+    padding: 100px 6vw;
+  }
+  .quote blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    font-weight: 400;
+    max-width: 900px;
+    margin: 0 auto 24px;
+    line-height: 1.4;
+  }
+  .quote cite {
+    font-style: normal;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    opacity: .85;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 80px 6vw 32px;
+  }
+  .footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(253, 248, 240, 0.15);
+  }
+  .footer-brand h3 {
+    color: var(--cream);
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+  .footer-brand h3 em { color: var(--ochre); font-style: italic; }
+  .footer-brand p {
+    color: rgba(253, 248, 240, 0.65);
+    font-size: .95rem;
+    max-width: 400px;
+  }
+  .footer-col h4 {
+    color: var(--ochre);
+    font-family: 'Inter', sans-serif;
+    font-size: .8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a {
+    color: rgba(253, 248, 240, 0.7);
+    font-size: .92rem;
+  }
+  .footer-col a:hover { color: var(--cream); }
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 32px auto 0;
+    text-align: center;
+    color: rgba(253, 248, 240, 0.45);
+    font-size: .8rem;
+    letter-spacing: 1px;
+  }
+
+  /* REVEAL ANIMATION */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity .9s ease, transform .9s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 880px) {
+    .nav-toggle { display: block; }
+    .nav-links {
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: var(--cream);
+      flex-direction: column;
+      gap: 0;
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease;
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-links.open { max-height: 400px; }
+    .nav-links li { width: 100%; padding: 16px 6vw; border-top: 1px solid var(--line); }
+    .intro-grid { grid-template-columns: 1fr; gap: 56px; }
+    .intro-image { max-width: 480px; margin: 0 auto; }
+    .stats { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+    .info-wrap { grid-template-columns: 1fr; gap: 32px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    section { padding: 80px 6vw; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="logo">ESTEPONA <span>·</span></div>
+  <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#intro">La ciudad</a></li>
+    <li><a href="#interest">Lugares</a></li>
+    <li><a href="#gastro">Gastronomía</a></li>
+    <li><a href="#info">Información</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Costa del Sol · Málaga</div>
+    <h1>Estepona<br><em>jardín del sur</em></h1>
+    <p class="hero-tagline">Donde el azul del Mediterráneo se encuentra con el blanco de la cal y el aroma a azahar.</p>
+    <a href="#intro" class="hero-cta">Descubrir</a>
+  </div>
+  <div class="scroll-indicator">desliza ↓</div>
+</header>
+
+<section class="intro" id="intro">
+  <div class="intro-grid">
+    <div class="intro-text reveal">
+      <div class="section-eyebrow">Bienvenido</div>
+      <h2>Un rincón <em>auténtico</em> de la Costa del Sol</h2>
+      <p>Bañada por más de veinte kilómetros de costa, Estepona conserva el alma de los pueblos blancos andaluces sin renunciar al pulso vibrante de los destinos más cosmopolitas del Mediterráneo.</p>
+      <p>Sus calles empedradas se visten de geranios, sus plazas huelen a jazmín y sus murales convierten el casco antiguo en un museo a cielo abierto. Un destino donde el tiempo se mide en atardeceres.</p>
+      <p>Conocida como <em>"el jardín de la Costa del Sol"</em>, Estepona invita a pasear sin prisa, a saborear sin reservas y a quedarse para siempre.</p>
+    </div>
+    <div class="intro-image reveal">
+      <img src="images/intro.jpg" alt="Calles blancas de Estepona con flores">
+    </div>
+  </div>
+
+  <div class="stats reveal">
+    <div class="stat">
+      <div class="stat-num">21</div>
+      <div class="stat-label">km de costa</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">325</div>
+      <div class="stat-label">días de sol</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">+70</div>
+      <div class="stat-label">murales urbanos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">XV</div>
+      <div class="stat-label">siglo de historia</div>
+    </div>
+  </div>
+</section>
+
+<section class="interest" id="interest">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Imprescindibles</div>
+    <h2>Puntos de <em>interés</em></h2>
+    <div class="ornament">· · ·</div>
+    <p>Desde plazas floridas hasta miradores frente al estrecho, seis lugares que cuentan la esencia de Estepona.</p>
+  </div>
+
+  <div class="interest-grid">
+    <a class="card reveal" href="https://turismo.estepona.es/lugares/plaza-de-las-flores/" target="_blank" rel="noopener">
+      <div class="card-image">
+        <img src="images/plaza-flores.jpg" alt="Plaza de las Flores">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Casco histórico</div>
+        <h3>Plaza de las Flores</h3>
+        <p>El corazón social de la ciudad: una plaza llena de naranjos, fuentes y terrazas donde se vive el ritmo más andaluz al amanecer y al anochecer.</p>
+      </div>
+    </a>
+
+    <a class="card reveal" href="https://turismo.estepona.es/lugares/ruta-rincones-con-encanto/" target="_blank" rel="noopener">
+      <div class="card-image">
+        <img src="images/casco-antiguo.jpg" alt="Casco antiguo">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Patrimonio</div>
+        <h3>Casco Antiguo</h3>
+        <p>Un laberinto de calles encaladas, balcones repletos de geranios y rincones llenos de poesía. Pasear por aquí es viajar al alma de la Andalucía costera.</p>
+      </div>
+    </a>
+
+    <a class="card reveal" href="https://turismo.estepona.es/lugares/murales-artisticos/" target="_blank" rel="noopener">
+      <div class="card-image">
+        <img src="images/murales.jpg" alt="Murales urbanos">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Arte urbano</div>
+        <h3>Ruta de los Murales</h3>
+        <p>Más de setenta obras de gran formato firmadas por artistas internacionales convierten cada esquina en una galería al aire libre.</p>
+      </div>
+    </a>
+
+    <a class="card reveal" href="https://turismo.estepona.es/lugares/parque-botanico-orquidario/" target="_blank" rel="noopener">
+      <div class="card-image">
+        <img src="images/orquidario.jpg" alt="Orquidario de Estepona">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Naturaleza</div>
+        <h3>Orquidario</h3>
+        <p>Una cúpula de cristal que alberga más de 1.300 especies de orquídeas tropicales: un rincón mágico en pleno centro de la ciudad.</p>
+      </div>
+    </a>
+
+    <a class="card reveal" href="https://turismo.estepona.es/lugares/paseo-maritimo/" target="_blank" rel="noopener">
+      <div class="card-image">
+        <img src="images/paseo.jpg" alt="Playa y paseo marítimo">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Mediterráneo</div>
+        <h3>Paseo Marítimo</h3>
+        <p>Más de tres kilómetros de paseo entre palmeras, chiringuitos y playas doradas. La cita obligada para ver el atardecer sobre el estrecho.</p>
+      </div>
+    </a>
+
+    <a class="card reveal" href="https://turismo.estepona.es/lugares/mirador-del-carmen/" target="_blank" rel="noopener">
+      <div class="card-image">
+        <img src="images/mirador.jpg" alt="Mirador del Carmen">
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Vistas</div>
+        <h3>Mirador del Carmen</h3>
+        <p>Junto al puerto pesquero, ofrece una de las panorámicas más fotografiadas de la ciudad, con la sierra Bermeja recortada al fondo.</p>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<section class="gastro" id="gastro">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Sabores del sur</div>
+    <h2>Gastronomía <em>típica</em></h2>
+    <div class="ornament">· · ·</div>
+    <p>Pescado fresco, huerta cercana y recetas heredadas. La cocina de Estepona es honesta, marinera y profundamente mediterránea.</p>
+  </div>
+
+  <div class="gastro-grid">
+    <div class="dish reveal">
+      <div class="dish-image">
+        <img src="images/espeto.jpg" alt="Espetos de sardinas">
+      </div>
+      <h3>Espeto de Sardinas</h3>
+      <span class="dish-sub">Brasas a la orilla</span>
+      <p>El icono malagueño por excelencia: sardinas ensartadas en una caña y asadas con leña de olivo en la misma arena de la playa.</p>
+    </div>
+
+    <div class="dish reveal">
+      <div class="dish-image">
+        <img src="images/fritura.jpg" alt="Fritura malagueña">
+      </div>
+      <h3>Fritura Malagueña</h3>
+      <span class="dish-sub">Pescado del día</span>
+      <p>Boquerones, calamares, salmonetes y rosadas, rebozados con harina especial y fritos en aceite de oliva. Crujiente por fuera, jugoso por dentro.</p>
+    </div>
+
+    <div class="dish reveal">
+      <div class="dish-image">
+        <img src="images/gambon.jpg" alt="Gambones de Estepona">
+      </div>
+      <h3>Gambón de Estepona</h3>
+      <span class="dish-sub">Producto local</span>
+      <p>Capturado por la flota local, es de los más apreciados del Mediterráneo. A la plancha con sal gorda revela todo su sabor a mar.</p>
+    </div>
+
+    <div class="dish reveal">
+      <div class="dish-image">
+        <img src="images/ajoblanco.jpg" alt="Ajoblanco">
+      </div>
+      <h3>Ajoblanco</h3>
+      <span class="dish-sub">Sopa fría</span>
+      <p>Almendras, ajo, pan, aceite y vinagre. Una receta milenaria, blanca y refrescante, servida con uvas moscatel o melón.</p>
+    </div>
+
+    <div class="dish reveal">
+      <div class="dish-image">
+        <img src="images/porra.jpg" alt="Porra antequerana">
+      </div>
+      <h3>Porra Antequerana</h3>
+      <span class="dish-sub">Hermana del gazpacho</span>
+      <p>Más densa y cremosa que el gazpacho, se sirve con jamón y huevo cocido. Un imprescindible de cualquier mesa veraniega.</p>
+    </div>
+
+    <div class="dish reveal">
+      <div class="dish-image">
+        <img src="images/dulces.jpg" alt="Tortas de aceite y dulces">
+      </div>
+      <h3>Dulces Conventuales</h3>
+      <span class="dish-sub">Repostería tradicional</span>
+      <p>Tortas de aceite, borrachuelos, pestiños y roscos elaborados con recetas centenarias, ideales para acompañar un café del sur.</p>
+    </div>
+  </div>
+</section>
+
+<section class="quote">
+  <blockquote>"Estepona huele a flor de azahar, a sal de mar y a leña de espeto. Tres aromas que ningún viajero olvida."</blockquote>
+  <cite>— Crónicas del litoral malagueño</cite>
+</section>
+
+<section class="info" id="info">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Planifica tu visita</div>
+    <h2>Información <em>turística</em></h2>
+    <div class="ornament">· · ·</div>
+    <p>Todo lo que necesitas saber para descubrir Estepona con calma, desde los puntos oficiales de información hasta los recursos digitales.</p>
+  </div>
+
+  <div class="info-wrap">
+    <div class="info-card reveal">
+      <div class="ic-icon">i</div>
+      <span class="ic-sub">Punto oficial</span>
+      <h3>Oficina de Turismo</h3>
+      <ul class="info-list">
+        <li><strong>Dirección</strong><span>Plaza de las Flores, s/n · 29680 Estepona</span></li>
+        <li><strong>Teléfono</strong><span>+34 952 808 081</span></li>
+        <li><strong>Email</strong><span>turismo@estepona.es</span></li>
+        <li><strong>Horario</strong><span>L–V 9:00–15:00 · S 10:00–14:00</span></li>
+        <li><strong>Web</strong><span><a href="https://www.estepona.es" target="_blank" rel="noopener">estepona.es</a></span></li>
+      </ul>
+    </div>
+
+    <div class="info-card reveal">
+      <div class="ic-icon">✦</div>
+      <span class="ic-sub">Recursos útiles</span>
+      <h3>Cómo llegar y moverse</h3>
+      <ul class="info-list">
+        <li><strong>Aeropuerto</strong><span>Málaga–Costa del Sol (AGP) · 80 km</span></li>
+        <li><strong>Autobús</strong><span>Avanza Bus desde Málaga, Marbella y Algeciras</span></li>
+        <li><strong>Coche</strong><span>A-7 / AP-7 (salidas 153–162)</span></li>
+        <li><strong>Visitas guiadas</strong><span>Reserva en la oficina o en visitestepona.com</span></li>
+        <li><strong>App oficial</strong><span>"Estepona Turismo" (iOS y Android)</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="map-cta reveal">
+    <a href="https://www.google.com/maps/place/Estepona,+M%C3%A1laga/" target="_blank" rel="noopener">Ver en el mapa</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>Estepona <em>·</em></h3>
+      <p>El jardín de la Costa del Sol. Una invitación a descubrir el Mediterráneo más auténtico, hecho de luz, mar y tradición.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explorar</h4>
+      <ul>
+        <li><a href="#intro">La ciudad</a></li>
+        <li><a href="#interest">Lugares</a></li>
+        <li><a href="#gastro">Gastronomía</a></li>
+        <li><a href="#info">Información</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li>Plaza de las Flores</li>
+        <li>29680 Estepona, Málaga</li>
+        <li>+34 952 808 081</li>
+        <li><a href="mailto:turismo@estepona.es">turismo@estepona.es</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © AVO 2026 · Página informativa sobre Estepona · Hecha con cariño bajo el sol del sur
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // Mobile nav toggle
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  document.querySelectorAll('.nav-links a').forEach(a =>
+    a.addEventListener('click', () => links.classList.remove('open'))
+  );
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
